@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-white text-gray-900 antialiased;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.font-calendly {
+  font-family: var(--font-calendly), "Lexend", "Nunito Sans", system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+@layer components {
+  .btn-calendly {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-[#006bff] hover:bg-[#0056d6] transition-colors shadow-sm;
+  }
+  .btn-calendly-outline {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-[#006bff] bg-white border border-[#006bff] hover:bg-[#e8f2ff] transition-colors;
+  }
+  .filter-pill {
+    @apply px-4 py-2 rounded-full text-sm font-medium border transition-colors;
+  }
+  .filter-pill-active {
+    @apply bg-[#1a1f36] text-white border-[#1a1f36];
+  }
+  .filter-pill-inactive {
+    @apply bg-white text-gray-800 border-gray-300 hover:border-gray-400;
+  }
+}
