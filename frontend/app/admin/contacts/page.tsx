@@ -22,6 +22,10 @@ function getInitials(name: string) {
     .slice(0, 2);
 }
 
+function formatMeetingDate(iso?: string) {
+  if (!iso) return "—";
+  return formatDateTime(iso);
+}
 
 export default function ContactsPage() {
   const [contacts, setContacts] = useState<ContactItem[]>([]);
@@ -44,7 +48,10 @@ export default function ContactsPage() {
       .finally(() => setLoading(false));
   }, [filter, search]);
 
-  
+  useEffect(() => {
+    load();
+  }, [load]);
+
   useEffect(() => {
     const t = setTimeout(() => setSearch(searchInput), 300);
     return () => clearTimeout(t);
@@ -78,7 +85,12 @@ export default function ContactsPage() {
     load();
   };
 
-
+  const toggleSelect = (id: string) => {
+    const next = new Set(selected);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    setSelected(next);
+  };
 
   const toggleAll = () => {
     if (selected.size === contacts.length) setSelected(new Set());
@@ -212,7 +224,7 @@ export default function ContactsPage() {
                         <input
                           type="checkbox"
                           checked={selected.has(c.id)}
-                          
+                          onChange={() => toggleSelect(c.id)}
                           className="rounded border-gray-300"
                         />
                       </td>
@@ -232,10 +244,10 @@ export default function ContactsPage() {
                       <td className="px-4 py-3 text-gray-600">{c.email}</td>
                       <td className="px-4 py-3 text-gray-600">{c.phone || "—"}</td>
                       <td className="px-4 py-3 text-gray-600 whitespace-nowrap">
-                        
+                        {formatMeetingDate(c.last_meeting_date)}
                       </td>
                       <td className="px-4 py-3 text-gray-600 whitespace-nowrap">
-                       
+                        {formatMeetingDate(c.next_meeting_date)}
                       </td>
                       <td className="px-4 py-3 text-gray-600">{c.company || "—"}</td>
                       <td className="px-4 py-3 text-right">
