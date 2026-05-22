@@ -25,7 +25,13 @@ export default function EventTypesPage() {
     load();
   }, []);
 
- 
+  const copyLink = (slug: string) => {
+    const url = `${window.location.origin}/book/${slug}`;
+    navigator.clipboard.writeText(url);
+    setCopied(slug);
+    setTimeout(() => setCopied(null), 2000);
+  };
+
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this event type?")) return;
     await api.deleteEventType(id);
@@ -106,7 +112,9 @@ export default function EventTypesPage() {
               {eventTypes.map((et) => (
                 <div onClick={() => router.push(`/admin/event-types/${et.id}/edit`)}
                   key={et.id}
-                  
+                  className={`relative overflow-hidden rounded-lg bg-white shadow-sm transition-all
+before:absolute before:left-0 before:top-0 before:h-full before:w-2 before:bg-purple-600
+hover:bg-blue-50 hover:!border-red-500`}
                 >
                   <div className="flex items-center justify-between px-5 py-2">
                     <div className="flex items-start gap-4">
@@ -131,7 +139,7 @@ export default function EventTypesPage() {
 
                     <div className="flex items-center gap-3">
                       <button
-                        
+                        onClick={() => copyLink(et.slug)}
                         className="rounded-full border border-[#0b2545] px-4 py-2 text-sm font-semibold text-[#0b2545] hover:bg-gray-50"
                       >
                         {copied === et.slug ? "Copied!" : "Copy link"}
