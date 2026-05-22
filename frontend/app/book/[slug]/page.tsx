@@ -37,7 +37,16 @@ export default function BookPage() {
       .finally(() => setLoading(false));
   }, [slug]);
 
+  useEffect(() => {
+    if (selectedDate && event) {
+      api
+        .getSlots(slug, selectedDate)
+        .then((r) => setSlots(r.slots))
+        .catch(() => setSlots([]));
 
+      setSelectedSlot(null);
+    }
+  }, [selectedDate, slug, event]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -245,6 +254,18 @@ export default function BookPage() {
                   />
                 </div>
 
+                <div>
+                  <label className="mb-2 block font-bold text-[#0b2545]">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="h-12 w-full rounded-md border border-[#9db4cc] px-4 outline-none focus:border-blue-600"
+                  />
+                </div>
 
                 <button
                   type="button"
@@ -306,7 +327,16 @@ export default function BookPage() {
                   </div>
                 ))}
 
-              
+                <p className="text-base leading-relaxed text-[#0b2545]">
+                  By proceeding, you confirm that you have read and agree to{" "}
+                  <span className="font-bold text-blue-600">
+                    Calendly_Clone&apos;s Invitee Terms
+                  </span>{" "}
+                  and{" "}
+                  <span className="font-bold text-blue-600">
+                    Privacy Notice.
+                  </span>
+                </p>
 
                 <button
                   type="submit"
