@@ -13,12 +13,18 @@ export default function MeetingsPage() {
   const [cancelReason, setCancelReason] = useState("");
   const [rescheduleTime, setRescheduleTime] = useState("");
 
+  const load = () => {
+    setLoading(true);
+    api.getMeetings(tab).then((r) => setMeetings(r.meetings)).finally(() => setLoading(false));
+  };
+
+  useEffect(() => { load(); }, [tab]);
 
   const handleCancel = async (id: string) => {
     await api.cancelMeeting(id, cancelReason);
     setActionId(null);
     setCancelReason("");
- 
+    load();
   };
 
   const handleReschedule = async (id: string) => {
@@ -26,7 +32,7 @@ export default function MeetingsPage() {
     await api.rescheduleMeeting(id, { new_start_time: new Date(rescheduleTime).toISOString(), timezone: "Asia/Kolkata" });
     setActionId(null);
     setRescheduleTime("");
-
+    load();
   };
 
   return (
