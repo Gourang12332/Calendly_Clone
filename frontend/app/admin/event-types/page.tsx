@@ -4,14 +4,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import AdminLayout from "@/components/AdminLayout";
 import { api, EventTypeListItem } from "@/lib/api";
-import { useRouter } from "next/navigation";
+
 
 export default function EventTypesPage() {
   const [eventTypes, setEventTypes] = useState<EventTypeListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState<string | null>(null);
 
-  const router = useRouter();
 
   const load = () => {
     setLoading(true);
@@ -110,7 +109,7 @@ export default function EventTypesPage() {
           ) : (
             <div className="space-y-4">
               {eventTypes.map((et) => (
-                <div onClick={() => router.push(`/admin/event-types/${et.id}/edit`)}
+                <div
                   key={et.id}
                   className={`relative overflow-hidden rounded-lg bg-white shadow-sm transition-all
 before:absolute before:left-0 before:top-0 before:h-full before:w-2 before:bg-purple-600
