@@ -47,7 +47,7 @@ export default function AvailabilityPage() {
     }
   };
 
-  useEffect(() => { loadSchedules(); }, []);
+  useEffect(() => { loadSchedules(); }, [loadSchedules]);
 
   useEffect(() => {
     if (selectedId) {

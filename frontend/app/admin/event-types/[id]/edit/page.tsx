@@ -76,10 +76,21 @@ export default function EditEventTypePage() {
     setQuestions(questions.filter((_, i) => i !== idx));
   };
 
-  const updateQuestion = (idx: number, field: string, value: string | boolean | number) => {
-    const updated = [...questions];
-    (updated[idx] as Record<string, unknown>)[field] = value;
-    setQuestions(updated);
+  const updateQuestion = (
+    idx: number,
+    field: keyof QuestionUpdate,
+    value: string | boolean | number
+  ) => {
+    setQuestions((prev) =>
+      prev.map((q, i) =>
+        i === idx
+          ? {
+              ...q,
+              [field]: value,
+            }
+          : q
+      )
+    );
   };
 
   const addOption = (qIdx: number) => {

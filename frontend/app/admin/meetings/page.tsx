@@ -18,7 +18,7 @@ export default function MeetingsPage() {
     api.getMeetings(tab).then((r) => setMeetings(r.meetings)).finally(() => setLoading(false));
   };
 
-  useEffect(() => { load(); }, [tab]);
+  useEffect(() => { load(); }, [load]);
 
   const handleCancel = async (id: string) => {
     await api.cancelMeeting(id, cancelReason);
