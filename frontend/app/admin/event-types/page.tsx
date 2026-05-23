@@ -55,12 +55,18 @@ export default function EventTypesPage() {
 
   const handleBulkDelete = async () => {
     if (selected.size === 0) return;
-    if (!confirm(`Delete ${selected.size} selected event type(s)?`)) return;
+
+    const ok = window.confirm(`Delete ${selected.size} selected event type(s)?`);
+    if (!ok) return;
 
     setBulkDeleting(true);
 
     try {
-      await Promise.all([...selected].map((id) => api.deleteEventType(id)));
+      const ids: string[] = [];
+      selected.forEach((id) => ids.push(id));
+
+      await Promise.all(ids.map((id) => api.deleteEventType(id)));
+
       setSelected(new Set());
       load();
     } finally {
