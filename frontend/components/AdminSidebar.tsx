@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import CreateEventTypeDropdown from "@/components/CreateEventTypeDropdown";
 import {
   IconAvailability,
   IconContacts,
@@ -40,13 +41,12 @@ export default function AdminSidebar() {
       </div>
 
       <div className="px-4 pb-2 pt-3 md:pt-4">
-        <Link
-          href="/admin/event-types/new"
-          className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-800 hover:bg-gray-50 hover:border-gray-400 transition-colors"
-        >
-          <span className="text-base leading-none text-gray-700">+</span>
-          Create
-        </Link>
+        <CreateEventTypeDropdown
+          label="+ Create"
+          className="w-full"
+          buttonClassName="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-800 transition-colors hover:border-gray-400 hover:bg-gray-50"
+          menuAlign="left"
+        />
       </div>
 
       <nav className="flex gap-1 overflow-x-auto px-3 py-2 md:block md:flex-1 md:space-y-0.5 md:overflow-visible">

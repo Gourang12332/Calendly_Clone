@@ -7,6 +7,7 @@ import TimezoneSelect from "@/components/TimezoneSelect";
 import { api, TokenBooking, Slot } from "@/lib/api";
 import { getBrowserTimezone } from "@/lib/timezones";
 import { formatTime } from "@/lib/utils";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function ReschedulePage() {
   const params = useParams();
@@ -62,7 +63,7 @@ export default function ReschedulePage() {
   if (!booking) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
-        <p className="text-gray-500">Loading...</p>
+        <LoadingSpinner text="Loading meetings" className="py-16" />
       </div>
     );
   }

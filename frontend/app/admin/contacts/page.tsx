@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import AdminLayout from "@/components/AdminLayout";
 import { api, ContactItem, ContactCreate } from "@/lib/api";
 import { formatDateTime } from "@/lib/utils";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 type FilterType = "all" | "new" | "repeat";
 
@@ -207,9 +208,7 @@ export default function ContactsPage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={8} className="px-4 py-12 text-center text-gray-500">
-                      Loading contacts...
-                    </td>
+                    <LoadingSpinner text="Loading meetings" className="py-16" />
                   </tr>
                 ) : contacts.length === 0 ? (
                   <tr>

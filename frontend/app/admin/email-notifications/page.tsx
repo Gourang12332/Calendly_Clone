@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import AdminLayout from "@/components/AdminLayout";
 import { api, EmailNotification } from "@/lib/api";
 import { formatDateTime } from "@/lib/utils";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function EmailNotificationsPage() {
   const [notifications, setNotifications] = useState<EmailNotification[]>([]);
@@ -19,7 +20,7 @@ export default function EmailNotificationsPage() {
     <AdminLayout>
       <h1 className="mb-5 text-xl font-bold text-gray-900 sm:mb-6 sm:text-2xl">Email Notifications</h1>
       {loading ? (
-        <p className="text-gray-500">Loading...</p>
+        <LoadingSpinner text="Loading meetings" className="py-16" />
       ) : notifications.length === 0 ? (
         <div className="rounded-xl border border-gray-200 bg-white p-6 text-center text-gray-500 sm:p-12">No email logs yet</div>
       ) : (

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import AdminLayout from "@/components/AdminLayout";
 import { api, MeetingItem } from "@/lib/api";
 import { formatDateTime } from "@/lib/utils";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function MeetingsPage() {
   const [tab, setTab] = useState<"upcoming" | "past">("upcoming");
@@ -53,7 +54,7 @@ export default function MeetingsPage() {
         </button>
       </div>
       {loading ? (
-        <p className="text-gray-500">Loading...</p>
+        <LoadingSpinner text="Loading meetings" className="py-16" />
       ) : meetings.length === 0 ? (
         <div className="rounded-xl border border-gray-200 bg-white p-6 text-center text-gray-500 sm:p-12">No {tab} meetings</div>
       ) : (

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { api, BookingConfirmation } from "@/lib/api";
 import { formatDateTime } from "@/lib/utils";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function BookingConfirmedPage() {
   const params = useParams();
@@ -17,7 +18,7 @@ export default function BookingConfirmedPage() {
   if (!booking) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
-        <p className="text-gray-500">Loading...</p>
+        <LoadingSpinner text="Loading meetings" className="py-16" />
       </div>
     );
   }

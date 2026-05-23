@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import AdminLayout from "@/components/AdminLayout";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import CreateEventTypeDropdown from "@/components/CreateEventTypeDropdown";
 import { api, EventTypeListItem } from "@/lib/api";
 
 
@@ -10,6 +12,7 @@ export default function EventTypesPage() {
   const [eventTypes, setEventTypes] = useState<EventTypeListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
 
   const load = () => {
@@ -36,6 +39,28 @@ export default function EventTypesPage() {
     await api.deleteEventType(id);
     load();
   };
+
+  const filteredEventTypes = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
+
+    if (!query) return eventTypes;
+
+    return eventTypes.filter((et) => {
+      const searchableText = [
+        et.name,
+        et.slug,
+        `${et.duration_minutes} min`,
+        et.location_type,
+        et.event_kind,
+        et.availability_summary,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      return searchableText.includes(query);
+    });
+  }, [eventTypes, searchTerm]);
 
   return (
     <AdminLayout>
@@ -68,12 +93,7 @@ export default function EventTypesPage() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <h1 className="text-xl font-bold text-[#0b2545] sm:text-2xl">Scheduling</h1>
 
-            <Link
-              href="/admin/event-types/new"
-              className="w-full rounded-full bg-blue-600 px-7 py-2 text-center font-semibold text-white hover:bg-blue-700 sm:w-auto"
-            >
-              + Create
-            </Link>
+            <CreateEventTypeDropdown className="w-full sm:w-auto" menuAlign="right" />
           </div>
 
           <div className="mt-6 flex gap-6 overflow-x-auto text-sm font-semibold text-gray-500 sm:mt-8 sm:gap-8">
@@ -89,26 +109,41 @@ export default function EventTypesPage() {
           <div className="mb-8">
             <input
               type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search event types"
               className="h-12 w-full max-w-md rounded-md border border-[#9db4cc] px-4 outline-none focus:border-blue-600"
             />
           </div>
 
           {loading ? (
-            <p className="text-gray-500">Loading...</p>
+            <LoadingSpinner text="Loading event types" className="py-16" />
           ) : eventTypes.length === 0 ? (
             <div className="rounded-xl border border-gray-200 bg-white p-6 text-center sm:p-12">
               <p className="mb-4 text-gray-500">No event types yet</p>
-              <Link
-                href="/admin/event-types/new"
+              <CreateEventTypeDropdown
+                label="Create your first event type"
+                className="inline-block"
+                buttonClassName="font-medium text-blue-600 hover:underline"
+                menuAlign="left"
+              />
+            </div>
+          ) : filteredEventTypes.length === 0 ? (
+            <div className="rounded-xl border border-gray-200 bg-white p-6 text-center sm:p-12">
+              <p className="mb-4 text-gray-500">
+                No event types found for &quot;{searchTerm}&quot;
+              </p>
+              <button
+                type="button"
+                onClick={() => setSearchTerm("")}
                 className="font-medium text-blue-600 hover:underline"
               >
-                Create your first event type
-              </Link>
+                Clear search
+              </button>
             </div>
           ) : (
             <div className="space-y-4">
-              {eventTypes.map((et) => (
+              {filteredEventTypes.map((et) => (
                 <div
                   key={et.id}
                   className={`relative overflow-hidden rounded-lg bg-white shadow-sm transition-all

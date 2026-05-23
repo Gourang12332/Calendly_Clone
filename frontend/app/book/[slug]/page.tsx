@@ -7,6 +7,7 @@ import TimezoneSelect from "@/components/TimezoneSelect";
 import { api, PublicEventType, Slot } from "@/lib/api";
 import { getBrowserTimezone, getTimezoneLabel } from "@/lib/timezones";
 import { formatTime } from "@/lib/utils";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function BookPage() {
   const params = useParams();
@@ -88,7 +89,7 @@ export default function BookPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#f7f8fa]">
-        <p className="text-gray-500">Loading...</p>
+        <LoadingSpinner text="Loading meetings" className="py-16" />
       </div>
     );
   }

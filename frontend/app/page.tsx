@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import AdminLayout from "@/components/AdminLayout";
+import CreateEventTypeDropdown from "@/components/CreateEventTypeDropdown";
 import { api, EventTypeListItem, MeetingItem } from "@/lib/api";
 
 export default function DashboardPage() {
@@ -36,9 +37,12 @@ export default function DashboardPage() {
       <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Links</h2>
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <Link href="/admin/event-types/new" className="rounded-lg bg-primary-600 px-4 py-2 text-center text-sm font-medium text-white hover:bg-primary-700">
-            Create Event Type
-          </Link>
+          <CreateEventTypeDropdown
+            label="Create Event Type"
+            className="w-full sm:w-auto"
+            buttonClassName="w-full rounded-lg bg-primary-600 px-4 py-2 text-center text-sm font-medium text-white hover:bg-primary-700 sm:w-auto"
+            menuAlign="left"
+          />
           <Link href="/admin/availability" className="rounded-lg border border-primary-600 px-4 py-2 text-center text-sm font-medium text-primary-600 hover:bg-primary-50">
             Manage Availability
           </Link>
