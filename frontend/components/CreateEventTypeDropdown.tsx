@@ -96,65 +96,65 @@ export default function CreateEventTypeDropdown({
 
       {open && (
         <div
-          role="menu"
-          className={`absolute ${alignClass} top-full z-50 mt-3 w-[calc(100vw-2rem)] max-w-[430px] overflow-hidden rounded-lg border border-[#d7e3ef] bg-white text-left shadow-xl sm:w-[430px] lg:max-w-[520px] lg:w-[520px]`}
-        >
-          <div className="px-5 py-5 sm:px-7 sm:py-6">
-            <p className="mb-5 text-base font-bold text-[#46658a] sm:text-lg">
-              Event type
-            </p>
+        role="menu"
+        className={`absolute ${alignClass} top-full z-50 mt-3 w-[calc(100vw-2rem)] max-w-[430px] overflow-hidden rounded-lg border border-[#d7e3ef] bg-white text-left shadow-xl sm:w-[430px] lg:max-w-[500px] lg:w-[500px]`}
+      >
+        <div className="px-4 py-4 sm:px-5 sm:py-4">
+          <p className="mb-3 text-sm font-bold text-[#46658a]">
+            Event type
+          </p>
 
-            <div className="space-y-6">
-              {eventTypeOptions.map((option) => (
-                <Link
-                  key={option.title}
-                  href={createEventTypeHref}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-lg transition-colors hover:bg-blue-50 focus:bg-blue-50 focus:outline-none"
-                  role="menuitem"
-                >
-                  <div className="px-1 py-1">
-                    <h3 className="text-base font-bold text-blue-700 sm:text-lg">
-                      {option.title}
-                    </h3>
-                    <p className="mt-1 text-base text-[#0b2545] sm:text-lg">
-                      {option.line}
-                    </p>
-                    <p className="mt-1 text-sm text-[#506b8b] sm:text-base">
-                      {option.description}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
+          <div className="space-y-3">
+            {eventTypeOptions.map((option) => (
+              <Link
+                key={option.title}
+                href={createEventTypeHref}
+                onClick={() => setOpen(false)}
+                className="block rounded-lg transition-colors hover:bg-blue-50 focus:bg-blue-50 focus:outline-none"
+                role="menuitem"
+              >
+                <div className="px-1 py-0.5">
+                  <h3 className="text-sm font-bold text-blue-700">
+                    {option.title}
+                  </h3>
+                  <p className="mt-0.5 text-sm text-[#0b2545]">
+                    {option.line}
+                  </p>
+                  <p className="mt-0.5 text-xs text-[#506b8b]">
+                    {option.description}
+                  </p>
+                </div>
+              </Link>
+            ))}
           </div>
+        </div>
 
-          <div className="border-t border-[#d7e3ef] px-5 py-5 sm:px-7 sm:py-6">
-            <p className="mb-5 text-base font-bold text-[#46658a] sm:text-lg">
-              More ways to meet
-            </p>
+        <div className="border-t border-[#d7e3ef] px-4 py-4 sm:px-5 sm:py-4">
+          <p className="mb-3 text-sm font-bold text-[#46658a]">
+            More ways to meet
+          </p>
 
-            <div className="space-y-5">
-              {moreWaysOptions.map((option) => (
-                <Link
-                  key={option.title}
-                  href={createEventTypeHref}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-lg transition-colors hover:bg-blue-50 focus:bg-blue-50 focus:outline-none"
-                  role="menuitem"
-                >
-                  <div className="px-1 py-1">
-                    <h3 className="text-base font-bold text-blue-700 sm:text-lg">
-                      {option.title}
-                    </h3>
-                    <p className="mt-1 text-sm text-[#506b8b] sm:text-base">
-                      {option.description}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
+          <div className="space-y-3">
+            {moreWaysOptions.map((option) => (
+              <Link
+                key={option.title}
+                href={createEventTypeHref}
+                onClick={() => setOpen(false)}
+                className="block rounded-lg transition-colors hover:bg-blue-50 focus:bg-blue-50 focus:outline-none"
+                role="menuitem"
+              >
+                <div className="px-1 py-0.5">
+                  <h3 className="text-sm font-bold text-blue-700">
+                    {option.title}
+                  </h3>
+                  <p className="mt-0.5 text-xs text-[#506b8b]">
+                    {option.description}
+                  </p>
+                </div>
+              </Link>
+            ))}
           </div>
+        </div>
         </div>
       )}
     </div>

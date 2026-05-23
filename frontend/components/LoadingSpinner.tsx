@@ -31,11 +31,11 @@ export default function LoadingSpinner({
           className={`${sizes[size]} overflow-visible`}
           aria-hidden="true"
         >
-          <circle className="loader-orbit-dot" cx="64" cy="26" r="5.5" />
+          <circle className="loader-orbit-dot" cx="64" cy="26" r="2" />
 
-          <rect className="loader-piece loader-left" x="10" y="14" width="30" height="24" rx="9" />
-          <rect className="loader-piece loader-center" x="43" y="9" width="42" height="34" rx="11" />
-          <rect className="loader-piece loader-right" x="88" y="14" width="30" height="24" rx="9" />
+          <rect className="loader-piece loader-left" x="10" y="14" width="20" height="22" rx="4" />
+          <rect className="loader-piece loader-center" x="43" y="9" width="38" height="32" rx="9" />
+          <rect className="loader-piece loader-right" x="88" y="14" width="20" height="22" rx="4" />
         </svg>
 
         {showText ? (
@@ -74,23 +74,23 @@ export default function LoadingSpinner({
 
         @keyframes loaderOrbit {
           0% {
-            transform: translateX(52px) scale(1);
+            transform: translateX(70px) scale(1);
             opacity: 0.9;
           }
           20% {
-            transform: translateX(22px) scale(0.78);
+            transform: translateX(30px) scale(0.78);
             opacity: 0.28;
           }
           50% {
-            transform: translateX(-52px) scale(1);
+            transform: translateX(-70px) scale(1);
             opacity: 0.9;
           }
           70% {
-            transform: translateX(-22px) scale(0.78);
+            transform: translateX(-30px) scale(0.78);
             opacity: 0.28;
           }
           100% {
-            transform: translateX(52px) scale(1);
+            transform: translateX(30px) scale(1);
             opacity: 0.9;
           }
         }
