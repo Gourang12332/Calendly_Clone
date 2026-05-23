@@ -185,7 +185,7 @@ export default function BookPage() {
           {step === "calendar" && (
             <main className="grid grid-cols-1 gap-6 p-5 sm:p-8 lg:grid-cols-[minmax(0,1fr)_330px] lg:gap-8 lg:p-10">
               <section>
-                <h2 className="mb-6 text-xl font-bold text-[#0b2545] sm:mb-10 sm:text-2xl">
+                <h2 className="mb-6 text-md font-bold text-[#0b2545] sm:mb-10 sm:text-2xl">
                   Select a Date & Time
                 </h2>
 

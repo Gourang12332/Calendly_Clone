@@ -7,13 +7,13 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import CreateEventTypeDropdown from "@/components/CreateEventTypeDropdown";
 import { api, EventTypeListItem } from "@/lib/api";
 
-
 export default function EventTypesPage() {
   const [eventTypes, setEventTypes] = useState<EventTypeListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkDeleting, setBulkDeleting] = useState(false);
 
   const load = () => {
     setLoading(true);
@@ -40,6 +40,34 @@ export default function EventTypesPage() {
     load();
   };
 
+  const toggleSelect = (id: string) => {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const clearSelected = () => {
+    setSelected(new Set());
+  };
+
+  const handleBulkDelete = async () => {
+    if (selected.size === 0) return;
+    if (!confirm(`Delete ${selected.size} selected event type(s)?`)) return;
+
+    setBulkDeleting(true);
+
+    try {
+      await Promise.all([...selected].map((id) => api.deleteEventType(id)));
+      setSelected(new Set());
+      load();
+    } finally {
+      setBulkDeleting(false);
+    }
+  };
+
   const filteredEventTypes = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
 
@@ -64,7 +92,6 @@ export default function EventTypesPage() {
 
   return (
     <AdminLayout>
-      
       <div className="min-h-screen bg-white">
         <div className="border-b border-gray-200 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
           <div className="mb-6 rounded-md border border-blue-500 bg-blue-50 px-4 py-4 sm:px-5">
@@ -91,9 +118,14 @@ export default function EventTypesPage() {
           </div>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <h1 className="text-xl font-bold text-[#0b2545] sm:text-2xl">Scheduling</h1>
+            <h1 className="text-xl font-bold text-[#0b2545] sm:text-2xl">
+              Scheduling
+            </h1>
 
-            <CreateEventTypeDropdown className="w-full sm:w-auto" menuAlign="right" />
+            <CreateEventTypeDropdown
+              className="w-full sm:w-auto"
+              menuAlign="right"
+            />
           </div>
 
           <div className="mt-6 flex gap-6 overflow-x-auto text-sm font-semibold text-gray-500 sm:mt-8 sm:gap-8">
@@ -143,70 +175,111 @@ export default function EventTypesPage() {
             </div>
           ) : (
             <div className="space-y-4">
-              {filteredEventTypes.map((et) => (
-                <div
-                  key={et.id}
-                  className={`relative overflow-hidden rounded-lg bg-white shadow-sm transition-all
-before:absolute before:left-0 before:top-0 before:h-full before:w-2 before:bg-purple-600
-hover:bg-blue-50 hover:!border-red-500`}
-                >
-                  <div className="flex flex-col gap-4 px-4 py-4 sm:px-5 lg:flex-row lg:items-center lg:justify-between">
-                    <div className="flex min-w-0 items-start gap-3 sm:gap-4">
-                      <input type="checkbox" className="mt-1 h-4 w-4" />
+              {filteredEventTypes.map((et) => {
+                const isSelected = selected.has(et.id);
 
-                      <div>
-                        <h3 className="break-words text-base font-bold text-[#0b2545] sm:text-lg">
-                          {et.name}
-                        </h3>
+                return (
+                  <div
+                    key={et.id}
+                    className={`relative overflow-hidden rounded-lg border bg-white shadow-sm transition-all
+                      before:absolute before:left-0 before:top-0 before:h-full before:w-2 before:bg-purple-600
+                      hover:!border-blue-500 hover:bg-blue-50
+                      ${
+                        isSelected
+                          ? "!border-blue-600 bg-blue-50 ring-1 ring-blue-600"
+                          : "border-[#d6e0ea]"
+                      }`}
+                  >
+                    <div className="flex flex-col gap-4 px-4 py-4 sm:px-5 lg:flex-row lg:items-center lg:justify-between">
+                      <div className="flex min-w-0 items-start gap-3 sm:gap-4">
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => toggleSelect(et.id)}
+                          className="mt-1 h-4 w-4 cursor-pointer rounded border-gray-300"
+                        />
 
-                        <p className="mt-1 text-sm text-[#46658a]">
-                          {et.duration_minutes} min
-                          {et.location_type ? ` • ${et.location_type}` : ""}
-                          {et.event_kind ? ` • ${et.event_kind}` : ""}
-                        </p>
+                        <div>
+                          <h3 className="break-words text-base font-bold text-[#0b2545] sm:text-lg">
+                            {et.name}
+                          </h3>
 
-                        <p className="mt-1 text-sm text-[#46658a]">
-                          {et.availability_summary || "Availability varies"}
-                        </p>
+                          <p className="mt-1 text-sm text-[#46658a]">
+                            {et.duration_minutes} min
+                            {et.location_type ? ` • ${et.location_type}` : ""}
+                            {et.event_kind ? ` • ${et.event_kind}` : ""}
+                          </p>
+
+                          <p className="mt-1 text-sm text-[#46658a]">
+                            {et.availability_summary || "Availability varies"}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex w-full flex-wrap items-center gap-2 sm:gap-3 lg:w-auto">
+                        <button
+                          onClick={() => copyLink(et.slug)}
+                          className="rounded-full border border-[#0b2545] px-4 py-2 text-sm font-semibold text-[#0b2545] hover:bg-gray-50"
+                        >
+                          {copied === et.slug ? "Copied!" : "Copy link"}
+                        </button>
+
+                        <Link
+                          href={`/book/${et.slug}`}
+                          target="_blank"
+                          className="text-xl text-[#0b2545]"
+                        >
+                          ↗
+                        </Link>
+
+                        <Link
+                          href={`/admin/event-types/${et.id}/edit`}
+                          className="rounded-md px-3 py-2 text-sm font-semibold text-[#0b2545] hover:bg-gray-100"
+                        >
+                          Edit
+                        </Link>
+
+                        <button
+                          onClick={() => handleDelete(et.id)}
+                          className="rounded-md px-3 py-2 text-sm font-semibold text-red-600 hover:bg-red-50"
+                        >
+                          Delete
+                        </button>
                       </div>
                     </div>
-
-                    <div className="flex w-full flex-wrap items-center gap-2 sm:gap-3 lg:w-auto">
-                      <button
-                        onClick={() => copyLink(et.slug)}
-                        className="rounded-full border border-[#0b2545] px-4 py-2 text-sm font-semibold text-[#0b2545] hover:bg-gray-50"
-                      >
-                        {copied === et.slug ? "Copied!" : "Copy link"}
-                      </button>
-
-                      <Link
-                        href={`/book/${et.slug}`}
-                        target="_blank"
-                        className="text-xl text-[#0b2545]"
-                      >
-                        ↗
-                      </Link>
-
-                      <Link
-                        href={`/admin/event-types/${et.id}/edit`}
-                        className="rounded-md px-3 py-2 text-sm font-semibold text-[#0b2545] hover:bg-gray-100"
-                      >
-                        Edit
-                      </Link>
-
-                      <button
-                        onClick={() => handleDelete(et.id)}
-                        className="rounded-md px-3 py-2 text-sm font-semibold text-red-600 hover:bg-red-50"
-                      >
-                        Delete
-                      </button>
-                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
+
+        {selected.size > 0 && (
+          <div className="fixed bottom-8 left-1/2 z-50 flex -translate-x-1/2 flex-wrap items-center justify-center gap-3 rounded-xl border border-[#d6e0ea] bg-white px-5 py-4 shadow-2xl">
+            <span className="rounded-full bg-blue-50 px-3 py-1 font-bold text-[#0b2545]">
+              {selected.size}
+            </span>
+
+            <span className="font-semibold text-[#0b2545]">selected</span>
+
+            <button
+              type="button"
+              onClick={handleBulkDelete}
+              disabled={bulkDeleting}
+              className="rounded-full border border-[#0b2545] px-5 py-2 font-semibold text-[#0b2545] hover:bg-red-50 disabled:opacity-50"
+            >
+              {bulkDeleting ? "Deleting..." : "Delete"}
+            </button>
+
+            <button
+              type="button"
+              onClick={clearSelected}
+              className="px-2 text-2xl text-[#0b2545]"
+            >
+              ×
+            </button>
+          </div>
+        )}
       </div>
     </AdminLayout>
   );
