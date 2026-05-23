@@ -227,7 +227,7 @@ export default function BookPage() {
                           className={`flex-1 rounded border py-4 text-lg font-bold ${
                             isSelected
                               ? "bg-gray-600 text-white border-gray-600"
-                              : "border-blue-500 text-blue-600 hover:bg-blue-50"
+                              : "border-blue-400 text-blue-600 hover:border-blue-700"
                           }`}
                         >
                           {formatTime(slot.start_time, displayTimezone)}
