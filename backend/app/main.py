@@ -17,11 +17,11 @@ load_dotenv()
 
 app = FastAPI(title="Calendly Clone API", version="1.0.0")
 
-frontend_url = os.getenv("FRONTEND_URL", "https://calendly-clone-orcin-nu.vercel.app/")
+frontend_url = os.getenv("FRONTEND_URL", "https://calendly-clone-orcin-nu.vercel.app")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_url, "https://calendly-clone-orcin-nu.vercel.app/"],
+    allow_origins=[frontend_url, "https://calendly-clone-orcin-nu.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
