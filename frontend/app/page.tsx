@@ -16,16 +16,16 @@ export default function DashboardPage() {
 
   return (
     <AdminLayout>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Dashboard</h1>
-      <div className="grid md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+      <h1 className="mb-5 text-xl font-bold text-gray-900 sm:mb-6 sm:text-2xl">Dashboard</h1>
+      <div className="mb-6 grid gap-4 sm:mb-8 md:grid-cols-2 md:gap-6">
+        <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-2">Event Types</h2>
           <p className="text-3xl font-bold text-primary-600">{eventTypes.length}</p>
           <Link href="/admin/event-types" className="text-sm text-primary-600 hover:underline mt-2 inline-block">
             Manage event types →
           </Link>
         </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-2">Upcoming Meetings</h2>
           <p className="text-3xl font-bold text-primary-600">{upcoming.length}</p>
           <Link href="/admin/meetings" className="text-sm text-primary-600 hover:underline mt-2 inline-block">
@@ -33,13 +33,13 @@ export default function DashboardPage() {
           </Link>
         </div>
       </div>
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Links</h2>
-        <div className="flex flex-wrap gap-3">
-          <Link href="/admin/event-types/new" className="px-4 py-2 bg-primary-600 text-white rounded-lg text-sm font-medium hover:bg-primary-700">
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <Link href="/admin/event-types/new" className="rounded-lg bg-primary-600 px-4 py-2 text-center text-sm font-medium text-white hover:bg-primary-700">
             Create Event Type
           </Link>
-          <Link href="/admin/availability" className="px-4 py-2 border border-primary-600 text-primary-600 rounded-lg text-sm font-medium hover:bg-primary-50">
+          <Link href="/admin/availability" className="rounded-lg border border-primary-600 px-4 py-2 text-center text-sm font-medium text-primary-600 hover:bg-primary-50">
             Manage Availability
           </Link>
         </div>

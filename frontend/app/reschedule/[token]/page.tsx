@@ -68,21 +68,21 @@ export default function ReschedulePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white p-4 py-8">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2 text-center">Reschedule Meeting</h1>
-        <div className="bg-white border border-gray-200 rounded-xl p-4 mb-6 text-center">
+    <div className="min-h-screen bg-white px-3 py-6 sm:p-4 sm:py-8">
+      <div className="mx-auto max-w-3xl">
+        <h1 className="mb-2 text-center text-xl font-bold text-gray-900 sm:text-2xl">Reschedule Meeting</h1>
+        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-4 text-center">
           <p className="font-medium">{booking.event_name}</p>
           <p className="text-sm text-gray-500">Current: {formatTime(booking.start_time, displayTimezone)}</p>
         </div>
-        <div className="flex flex-col md:flex-row gap-8 justify-center items-start">
+        <div className="flex flex-col items-center justify-center gap-6 md:flex-row md:items-start md:gap-8">
           <Calendar selectedDate={selectedDate} onSelectDate={setSelectedDate} />
-          <div className="flex-1 max-w-xs w-full">
+          <div className="w-full max-w-sm flex-1 md:max-w-xs">
             <div className="flex flex-col gap-3 mb-3">
               <h2 className="font-semibold">Select new time</h2>
               <TimezoneSelect value={displayTimezone} onChange={setDisplayTimezone} compact />
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               {slots.map((slot) => (
                 <button
                   key={slot.start_time}

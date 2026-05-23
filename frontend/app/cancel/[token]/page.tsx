@@ -45,8 +45,8 @@ export default function CancelPage() {
   if (done) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white p-4">
-        <div className="max-w-md w-full text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Meeting Cancelled</h1>
+        <div className="w-full max-w-md text-center">
+          <h1 className="mb-2 text-xl font-bold text-gray-900 sm:text-2xl">Meeting Cancelled</h1>
           <p className="text-gray-500">Your meeting has been successfully cancelled.</p>
         </div>
       </div>
@@ -55,10 +55,10 @@ export default function CancelPage() {
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2 text-center">Cancel Meeting</h1>
+      <div className="w-full max-w-md">
+        <h1 className="mb-2 text-center text-xl font-bold text-gray-900 sm:text-2xl">Cancel Meeting</h1>
         <p className="text-gray-500 text-center mb-6">Are you sure you want to cancel this meeting?</p>
-        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm mb-6 space-y-2">
+        <div className="mb-6 space-y-2 rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
           <h2 className="font-semibold">{booking.event_name}</h2>
           <p className="text-sm text-gray-600">{booking.invitee_name}</p>
           <p className="text-sm text-gray-700">{formatDateTime(booking.start_time, booking.timezone)}</p>
@@ -71,8 +71,8 @@ export default function CancelPage() {
           rows={3}
         />
         {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
-        <div className="flex gap-3">
-          <button onClick={handleCancel} className="flex-1 py-2.5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700">
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <button onClick={handleCancel} className="flex-1 rounded-lg bg-red-600 py-2.5 font-medium text-white hover:bg-red-700">
             Confirm Cancel
           </button>
         </div>

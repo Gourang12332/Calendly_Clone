@@ -37,8 +37,8 @@ export default function MeetingsPage() {
 
   return (
     <AdminLayout>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Meetings</h1>
-      <div className="flex gap-2 mb-6">
+      <h1 className="mb-5 text-xl font-bold text-gray-900 sm:mb-6 sm:text-2xl">Meetings</h1>
+      <div className="mb-5 flex flex-wrap gap-2 sm:mb-6">
         <button
           onClick={() => setTab("upcoming")}
           className={`px-4 py-2 rounded-lg text-sm font-medium ${tab === "upcoming" ? "bg-primary-600 text-white" : "bg-white border border-gray-200 text-gray-600"}`}
@@ -55,14 +55,14 @@ export default function MeetingsPage() {
       {loading ? (
         <p className="text-gray-500">Loading...</p>
       ) : meetings.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-200 p-12 text-center text-gray-500">No {tab} meetings</div>
+        <div className="rounded-xl border border-gray-200 bg-white p-6 text-center text-gray-500 sm:p-12">No {tab} meetings</div>
       ) : (
         <div className="space-y-3">
           {meetings.map((m) => (
-            <div key={m.id} className="bg-white rounded-xl border border-gray-200 p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div>
+            <div key={m.id} className="flex flex-col justify-between gap-4 rounded-xl border border-gray-200 bg-white p-4 sm:p-5 md:flex-row md:items-center">
+              <div className="min-w-0">
                 <h3 className="font-semibold text-gray-900">{m.event_name}</h3>
-                <p className="text-sm text-gray-600">{m.invitee_name} · {m.invitee_email}</p>
+                <p className="break-all text-sm text-gray-600">{m.invitee_name} · {m.invitee_email}</p>
                 <p className="text-sm text-gray-500 mt-1">{formatDateTime(m.start_time)}</p>
                 <span className={`inline-block mt-2 px-2 py-0.5 text-xs rounded-full ${
                   m.status === "scheduled" ? "bg-green-100 text-green-700" :
@@ -71,24 +71,24 @@ export default function MeetingsPage() {
                 }`}>{m.status}</span>
               </div>
               {tab === "upcoming" && m.status === "scheduled" && (
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-2 sm:flex-row">
                   <button onClick={() => setActionId(m.id + "-cancel")} className="px-3 py-1.5 text-sm border border-red-300 text-red-600 rounded-lg hover:bg-red-50">Cancel</button>
                   <button onClick={() => setActionId(m.id + "-reschedule")} className="px-3 py-1.5 text-sm border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50">Reschedule</button>
                 </div>
               )}
               {actionId === m.id + "-cancel" && (
-                <div className="w-full md:w-auto space-y-2">
+                <div className="w-full space-y-2 md:w-auto">
                   <input value={cancelReason} onChange={(e) => setCancelReason(e.target.value)} placeholder="Reason" className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full" />
-                  <div className="flex gap-2">
+                  <div className="flex flex-col gap-2 sm:flex-row">
                     <button onClick={() => handleCancel(m.id)} className="px-3 py-1.5 text-sm bg-red-600 text-white rounded-lg">Confirm</button>
                     <button onClick={() => setActionId(null)} className="px-3 py-1.5 text-sm border rounded-lg">Back</button>
                   </div>
                 </div>
               )}
               {actionId === m.id + "-reschedule" && (
-                <div className="w-full md:w-auto space-y-2">
+                <div className="w-full space-y-2 md:w-auto">
                   <input type="datetime-local" value={rescheduleTime} onChange={(e) => setRescheduleTime(e.target.value)} className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full" />
-                  <div className="flex gap-2">
+                  <div className="flex flex-col gap-2 sm:flex-row">
                     <button onClick={() => handleReschedule(m.id)} className="px-3 py-1.5 text-sm bg-primary-600 text-white rounded-lg">Confirm</button>
                     <button onClick={() => setActionId(null)} className="px-3 py-1.5 text-sm border rounded-lg">Back</button>
                   </div>

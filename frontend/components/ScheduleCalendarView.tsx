@@ -103,7 +103,7 @@ export default function ScheduleCalendarView({
     cells.push(
       <div
         key={`prev-${i}`}
-        className="min-h-[88px] border border-gray-100 bg-gray-50/80 p-2 text-gray-300"
+        className="min-h-[74px] border border-gray-100 bg-gray-50/80 p-1.5 text-gray-300 sm:min-h-[88px] sm:p-2"
       >
         <span className="text-sm">{prevDate.getDate()}</span>
       </div>
@@ -117,7 +117,7 @@ export default function ScheduleCalendarView({
     cells.push(
       <div
         key={day}
-        className={`min-h-[88px] border border-gray-200 p-2 relative ${
+        className={`relative min-h-[74px] border border-gray-200 p-1.5 sm:min-h-[88px] sm:p-2 ${
           info.isOverride ? "bg-amber-50/60" : "bg-white"
         }`}
       >
@@ -143,7 +143,7 @@ export default function ScheduleCalendarView({
             <button
               type="button"
               onClick={() => onDeleteOverride(info.overrideId!)}
-              className="text-[10px] text-red-600 hover:underline"
+              className="text-[10px] text-red-600 hover:underline sm:text-xs"
               title="Delete override"
             >
               Delete
@@ -167,7 +167,7 @@ export default function ScheduleCalendarView({
     cells.push(
       <div
         key={`next-${i}`}
-        className="min-h-[88px] border border-gray-100 bg-gray-50/80 p-2 text-gray-300"
+        className="min-h-[74px] border border-gray-100 bg-gray-50/80 p-1.5 text-gray-300 sm:min-h-[88px] sm:p-2"
       >
         <span className="text-sm">{i}</span>
       </div>
@@ -176,7 +176,7 @@ export default function ScheduleCalendarView({
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
+      <div className="mb-4 flex items-center justify-between gap-3">
         <button
           type="button"
           onClick={prevMonth}
@@ -185,7 +185,7 @@ export default function ScheduleCalendarView({
         >
           ‹
         </button>
-        <h3 className="text-lg font-semibold text-gray-900">
+        <h3 className="text-center text-base font-semibold text-gray-900 sm:text-lg">
           {MONTH_NAMES[viewMonth]} {viewYear}
         </h3>
         <button
@@ -200,7 +200,8 @@ export default function ScheduleCalendarView({
 
       <p className="text-sm text-gray-500 mb-3">{getTimezoneLabel(detail.timezone)}</p>
 
-      <div className="grid grid-cols-7 border border-gray-200 rounded-lg overflow-hidden">
+      <div className="overflow-x-auto pb-1">
+        <div className="grid min-w-[620px] grid-cols-7 overflow-hidden rounded-lg border border-gray-200 sm:min-w-0">
         {DAY_NAMES.map((d) => (
           <div
             key={d}
@@ -210,9 +211,10 @@ export default function ScheduleCalendarView({
           </div>
         ))}
         {cells}
+        </div>
       </div>
 
-      <div className="flex gap-4 mt-3 text-xs text-gray-500">
+      <div className="mt-3 flex flex-wrap gap-3 text-xs text-gray-500 sm:gap-4">
         <span className="flex items-center gap-1">
           <svg className="w-3 h-3 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M17 1l4 4-4 4M3 11V9a4 4 0 014-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 01-4 4H3" />

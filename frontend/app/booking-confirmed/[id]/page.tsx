@@ -24,16 +24,16 @@ export default function BookingConfirmedPage() {
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <div className="max-w-md w-full text-center">
+      <div className="w-full max-w-md text-center">
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <span className="text-3xl text-green-600">✓</span>
         </div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">You are scheduled!</h1>
+        <h1 className="mb-2 text-xl font-bold text-gray-900 sm:text-2xl">You are scheduled!</h1>
         <p className="text-gray-500 mb-8">A calendar invitation has been sent to your email address.</p>
-        <div className="bg-white border border-gray-200 rounded-xl p-6 text-left shadow-sm space-y-3">
+        <div className="space-y-3 rounded-xl border border-gray-200 bg-white p-4 text-left shadow-sm sm:p-6">
           <h2 className="font-semibold text-gray-900 text-lg">{booking.event_name}</h2>
           <p className="text-sm text-gray-600">
-            <span className="font-medium">{booking.invitee_name}</span> · {booking.invitee_email}
+            <span className="font-medium">{booking.invitee_name}</span> · <span className="break-all">{booking.invitee_email}</span>
           </p>
           <p className="text-sm text-gray-700">{formatDateTime(booking.start_time, booking.timezone)}</p>
           <p className="text-sm text-gray-500">Timezone: {booking.timezone}</p>

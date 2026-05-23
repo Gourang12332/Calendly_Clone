@@ -38,7 +38,7 @@ export default function Calendar({ selectedDate, onSelectDate, minDate }: Calend
 
   const cells = [];
   for (let i = 0; i < firstDay; i++) {
-    cells.push(<div key={`empty-${i}`} className="h-10" />);
+    cells.push(<div key={`empty-${i}`} className="h-9 sm:h-10" />);
   }
   for (let day = 1; day <= daysInMonth; day++) {
     const d = new Date(viewYear, viewMonth, day);
@@ -53,7 +53,7 @@ export default function Calendar({ selectedDate, onSelectDate, minDate }: Calend
         type="button"
         disabled={isPast}
         onClick={() => onSelectDate(dateStr)}
-        className={`h-10 w-10 rounded-full text-sm font-medium transition-colors ${
+        className={`h-9 w-9 rounded-full text-xs font-medium transition-colors sm:h-10 sm:w-10 sm:text-sm ${
           isSelected
             ? "bg-primary-600 text-white"
             : isToday
@@ -69,19 +69,19 @@ export default function Calendar({ selectedDate, onSelectDate, minDate }: Calend
   }
 
   return (
-    <div className="w-full max-w-sm">
+    <div className="mx-auto w-full max-w-sm">
       <div className="flex items-center justify-between mb-4">
         <button type="button" onClick={prevMonth} className="p-2 text-gray-500 hover:text-primary-600">
           ‹
         </button>
-        <h3 className="font-semibold text-gray-900">
+        <h3 className="text-center font-semibold text-gray-900">
           {MONTH_NAMES[viewMonth]} {viewYear}
         </h3>
         <button type="button" onClick={nextMonth} className="p-2 text-gray-500 hover:text-primary-600">
           ›
         </button>
       </div>
-      <div className="grid grid-cols-7 gap-1 mb-2">
+      <div className="mb-2 grid grid-cols-7 gap-1">
         {DAY_NAMES.map((d) => (
           <div key={d} className="h-8 flex items-center justify-center text-xs font-medium text-gray-500">
             {d}

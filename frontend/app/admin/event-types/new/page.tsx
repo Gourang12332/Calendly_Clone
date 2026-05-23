@@ -57,8 +57,8 @@ export default function NewEventTypePage() {
 
   return (
     <AdminLayout>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">New Event Type</h1>
-      <form onSubmit={handleSubmit} className="max-w-xl bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+      <h1 className="mb-5 text-xl font-bold text-gray-900 sm:mb-6 sm:text-2xl">New Event Type</h1>
+      <form onSubmit={handleSubmit} className="w-full max-w-xl space-y-4 rounded-xl border border-gray-200 bg-white p-4 sm:p-6">
         {error && <p className="text-red-600 text-sm">{error}</p>}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
@@ -85,7 +85,7 @@ export default function NewEventTypePage() {
             ))}
           </select>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Buffer Before (min)</label>
             <input type="number" min={0} value={bufferBefore} onChange={(e) => setBufferBefore(Number(e.target.value))} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
@@ -103,7 +103,7 @@ export default function NewEventTypePage() {
             <option value="in_person">In Person</option>
           </select>
         </div>
-        <button type="submit" disabled={saving} className="w-full py-2.5 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 disabled:opacity-50">
+        <button type="submit" disabled={saving} className="w-full rounded-lg bg-primary-600 py-2.5 font-medium text-white hover:bg-primary-700 disabled:opacity-50">
           {saving ? "Creating..." : "Create Event Type"}
         </button>
       </form>

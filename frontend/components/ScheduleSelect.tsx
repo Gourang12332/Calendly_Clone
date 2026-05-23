@@ -20,12 +20,12 @@ export default function ScheduleSelect({
   }
 
   return (
-    <div className={`relative inline-flex items-center max-w-full ${className}`}>
+    <div className={`relative inline-flex w-full max-w-full items-center sm:w-auto ${className}`}>
       <label className="sr-only">Select schedule</label>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="appearance-none cursor-pointer text-sm font-semibold text-primary-700 bg-transparent border-0 pr-8 pl-0 py-1 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-md max-w-full truncate"
+        className="w-full max-w-full cursor-pointer appearance-none truncate rounded-md border-0 bg-transparent py-1 pl-0 pr-8 text-sm font-semibold text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 sm:w-auto"
       >
         {schedules.map((s) => (
           <option key={s.id} value={s.id}>

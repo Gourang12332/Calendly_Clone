@@ -125,9 +125,9 @@ export default function AvailabilityPage() {
 
   return (
     <AdminLayout>
-      <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
-        <div>
-          <p className="text-sm text-gray-500 mb-1">Schedule</p>
+      <div className="mb-5 flex flex-col gap-4 sm:mb-6 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <p className="mb-1 text-sm text-gray-500">Schedule</p>
           {schedules.length > 0 && selectedId ? (
             <ScheduleSelect
               schedules={schedules}
@@ -135,7 +135,7 @@ export default function AvailabilityPage() {
               onChange={setSelectedId}
             />
           ) : (
-            <h1 className="text-xl font-semibold text-gray-900">No schedules yet</h1>
+            <h1 className="text-lg font-semibold text-gray-900 sm:text-xl">No schedules yet</h1>
           )}
           {selectedSchedule && (
             <p className="text-sm text-gray-500 mt-2">
@@ -144,10 +144,10 @@ export default function AvailabilityPage() {
             </p>
           )}
         </div>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
           <button
             onClick={() => setShowCreate(true)}
-            className="px-4 py-2 bg-primary-600 text-white rounded-lg text-sm font-medium hover:bg-primary-700"
+            className="w-full rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 sm:w-auto"
           >
             + New Schedule
           </button>
@@ -155,13 +155,13 @@ export default function AvailabilityPage() {
       </div>
 
       {detail && (
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-gray-100">
-            <div className="inline-flex rounded-lg border border-gray-200 p-0.5 bg-gray-50">
+        <div className="rounded-xl border border-gray-200 bg-white p-4 sm:p-6">
+          <div className="mb-6 flex flex-col gap-4 border-b border-gray-100 pb-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+            <div className="inline-flex w-full rounded-lg border border-gray-200 bg-gray-50 p-0.5 sm:w-auto">
               <button
                 type="button"
                 onClick={() => setViewMode("list")}
-                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors sm:flex-none ${
                   viewMode === "list"
                     ? "bg-white text-gray-900 shadow-sm"
                     : "text-gray-600 hover:text-gray-900"
@@ -172,7 +172,7 @@ export default function AvailabilityPage() {
               <button
                 type="button"
                 onClick={() => setViewMode("calendar")}
-                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors sm:flex-none ${
                   viewMode === "calendar"
                     ? "bg-white text-gray-900 shadow-sm"
                     : "text-gray-600 hover:text-gray-900"
@@ -201,8 +201,8 @@ export default function AvailabilityPage() {
                   const rule = detail.rules.find((r) => r.day_of_week === dow);
                   const active = rule?.is_active ?? false;
                   return (
-                    <div key={dow} className="flex items-center gap-4 flex-wrap">
-                      <label className="w-28 text-sm text-gray-700 flex items-center gap-2">
+                    <div key={dow} className="flex flex-col gap-2 rounded-lg border border-gray-100 p-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 sm:border-0 sm:p-0">
+                      <label className="flex w-full items-center gap-2 text-sm text-gray-700 sm:w-28">
                         <input
                           type="checkbox"
                           checked={active}
@@ -216,14 +216,14 @@ export default function AvailabilityPage() {
                             type="time"
                             value={rule?.start_time?.slice(0, 5) || "09:00"}
                             onChange={(e) => updateRule(dow, "start_time", e.target.value)}
-                            className="border border-gray-300 rounded-lg px-2 py-1 text-sm"
+                            className="w-full rounded-lg border border-gray-300 px-2 py-1 text-sm sm:w-auto"
                           />
-                          <span className="text-gray-400">to</span>
+                          <span className="text-sm text-gray-400">to</span>
                           <input
                             type="time"
                             value={rule?.end_time?.slice(0, 5) || "17:00"}
                             onChange={(e) => updateRule(dow, "end_time", e.target.value)}
-                            className="border border-gray-300 rounded-lg px-2 py-1 text-sm"
+                            className="w-full rounded-lg border border-gray-300 px-2 py-1 text-sm sm:w-auto"
                           />
                         </>
                       )}
@@ -233,7 +233,7 @@ export default function AvailabilityPage() {
               </div>
               <button
                 onClick={handleUpdate}
-                className="px-4 py-2 bg-primary-600 text-white rounded-lg text-sm font-medium hover:bg-primary-700 mb-6"
+                className="mb-6 w-full rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 sm:w-auto"
               >
                 Save schedule
               </button>
@@ -243,14 +243,14 @@ export default function AvailabilityPage() {
           {viewMode === "calendar" && (
             <button
               onClick={handleUpdate}
-              className="mt-4 px-4 py-2 border border-primary-600 text-primary-600 rounded-lg text-sm font-medium hover:bg-primary-50"
+              className="mt-4 w-full rounded-lg border border-primary-600 px-4 py-2 text-sm font-medium text-primary-600 hover:bg-primary-50 sm:w-auto"
             >
               Save schedule
             </button>
           )}
 
           <div className="border-t border-gray-100 pt-6 mt-6">
-            <div className="flex items-center justify-between mb-4">
+            <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <h3 className="font-semibold">Date Overrides</h3>
               <button onClick={() => setShowOverride(true)} className="text-sm text-primary-600 font-medium">
                 + Add Override
@@ -261,7 +261,7 @@ export default function AvailabilityPage() {
             ) : (
               <div className="space-y-2">
                 {detail.overrides.map((o) => (
-                  <div key={o.id} className="text-sm border border-gray-100 rounded-lg p-3 flex items-start justify-between gap-3">
+                  <div key={o.id} className="flex flex-col gap-3 rounded-lg border border-gray-100 p-3 text-sm sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <p className="font-medium">{o.override_date}</p>
                       <p className="text-gray-500">
@@ -287,22 +287,22 @@ export default function AvailabilityPage() {
       )}
 
       {showCreate && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl p-6 max-w-md w-full space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="max-h-[90vh] w-full max-w-md space-y-4 overflow-y-auto rounded-xl bg-white p-4 sm:p-6">
             <h3 className="font-semibold text-lg">Create Schedule</h3>
             <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" className="w-full border border-gray-300 rounded-lg px-3 py-2" />
             <TimezoneSelect label="Timezone" value={timezone} onChange={setTimezone} />
-            <div className="flex gap-2">
-              <button onClick={handleCreate} className="flex-1 py-2 bg-primary-600 text-white rounded-lg">Create</button>
-              <button onClick={() => setShowCreate(false)} className="flex-1 py-2 border border-gray-300 rounded-lg">Cancel</button>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <button onClick={handleCreate} className="flex-1 rounded-lg bg-primary-600 py-2 text-white">Create</button>
+              <button onClick={() => setShowCreate(false)} className="flex-1 rounded-lg border border-gray-300 py-2">Cancel</button>
             </div>
           </div>
         </div>
       )}
 
       {showOverride && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl p-6 max-w-md w-full space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="max-h-[90vh] w-full max-w-md space-y-4 overflow-y-auto rounded-xl bg-white p-4 sm:p-6">
             <h3 className="font-semibold text-lg">Date Override</h3>
             <input type="date" value={overrideDate} onChange={(e) => setOverrideDate(e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
             <label className="flex items-center gap-2 text-sm">
@@ -313,16 +313,16 @@ export default function AvailabilityPage() {
               <>
                 <input value={overrideReason} onChange={(e) => setOverrideReason(e.target.value)} placeholder="Reason" className="w-full border border-gray-300 rounded-lg px-3 py-2" />
                 {overrideSlots.map((s, i) => (
-                  <div key={i} className="flex gap-2">
-                    <input type="time" value={s.start_time} onChange={(e) => { const u = [...overrideSlots]; u[i].start_time = e.target.value; setOverrideSlots(u); }} className="border border-gray-300 rounded-lg px-2 py-1" />
-                    <input type="time" value={s.end_time} onChange={(e) => { const u = [...overrideSlots]; u[i].end_time = e.target.value; setOverrideSlots(u); }} className="border border-gray-300 rounded-lg px-2 py-1" />
+                  <div key={i} className="flex flex-col gap-2 sm:flex-row">
+                    <input type="time" value={s.start_time} onChange={(e) => { const u = [...overrideSlots]; u[i].start_time = e.target.value; setOverrideSlots(u); }} className="w-full rounded-lg border border-gray-300 px-2 py-1 sm:w-auto" />
+                    <input type="time" value={s.end_time} onChange={(e) => { const u = [...overrideSlots]; u[i].end_time = e.target.value; setOverrideSlots(u); }} className="w-full rounded-lg border border-gray-300 px-2 py-1 sm:w-auto" />
                   </div>
                 ))}
               </>
             )}
-            <div className="flex gap-2">
-              <button onClick={handleOverride} className="flex-1 py-2 bg-primary-600 text-white rounded-lg">Add</button>
-              <button onClick={() => setShowOverride(false)} className="flex-1 py-2 border border-gray-300 rounded-lg">Cancel</button>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <button onClick={handleOverride} className="flex-1 rounded-lg bg-primary-600 py-2 text-white">Add</button>
+              <button onClick={() => setShowOverride(false)} className="flex-1 rounded-lg border border-gray-300 py-2">Cancel</button>
             </div>
           </div>
         </div>

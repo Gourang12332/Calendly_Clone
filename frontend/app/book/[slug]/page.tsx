@@ -102,9 +102,9 @@ export default function BookPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f8fa] px-4 py-10">
+    <div className="min-h-screen bg-[#f7f8fa] px-3 py-5 sm:px-4 sm:py-8 lg:py-10">
       <div className="relative mx-auto max-w-5xl overflow-hidden rounded-xl border border-[#d6e0ea] bg-white shadow-sm">
-        <div className="absolute right-0 top-0 z-10 h-28 w-28 overflow-hidden">
+        <div className="absolute right-0 top-0 z-10 hidden h-28 w-28 overflow-hidden sm:block">
           <div className="absolute right-[-45px] top-[20px] w-44 rotate-45 bg-[#3f4a52] py-2 text-center text-[10px] font-bold leading-tight text-white shadow-md">
             POWERED BY
             <br />
@@ -113,22 +113,22 @@ export default function BookPage() {
         </div>
 
         <div className="grid min-h-[500px] grid-cols-1 lg:grid-cols-[355px_1fr]">
-          <aside className="relative border-b border-[#d6e0ea] p-8 lg:border-b-0 lg:border-r lg:p-10">
+          <aside className="relative border-b border-[#d6e0ea] p-5 sm:p-8 lg:border-b-0 lg:border-r lg:p-10">
             {step === "form" && (
               <button
                 type="button"
                 onClick={() => setStep("calendar")}
-                className="mb-10 flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 text-3xl text-blue-600 hover:bg-blue-50"
+                className="mb-6 flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-2xl text-blue-600 hover:bg-blue-50 sm:mb-10 sm:h-12 sm:w-12 sm:text-3xl"
               >
                 ←
               </button>
             )}
 
-            <p className="mb-2 text-lg font-semibold text-gray-500">
+            <p className="mb-2 text-base font-semibold text-gray-500 sm:text-lg">
               {event.user_name || event.owner_name || event.host_name || "Admin User"}
             </p>
 
-            <h1 className="mb-8 text-2xl font-bold leading-tight text-[#0b2545]">
+            <h1 className="mb-6 break-words text-2xl font-bold leading-tight text-[#0b2545] sm:mb-8">
               {event.name}
             </h1>
 
@@ -175,16 +175,16 @@ export default function BookPage() {
               )}
             </div>
 
-            <div className="absolute bottom-8 left-8 flex gap-8 text-sm font-semibold text-blue-600 lg:left-10 lg:text-base">
+            <div className="mt-8 flex flex-wrap gap-4 text-sm font-semibold text-blue-600 lg:absolute lg:bottom-8 lg:left-10 lg:mt-0 lg:gap-8 lg:text-base">
               <button type="button">Cookie settings</button>
               <button type="button">Privacy Policy</button>
             </div>
           </aside>
 
           {step === "calendar" && (
-            <main className="grid grid-cols-1 gap-8 p-8 lg:grid-cols-[1fr_330px] lg:p-10">
+            <main className="grid grid-cols-1 gap-6 p-5 sm:p-8 lg:grid-cols-[minmax(0,1fr)_330px] lg:gap-8 lg:p-10">
               <section>
-                <h2 className="mb-10 text-2xl font-bold text-[#0b2545]">
+                <h2 className="mb-6 text-xl font-bold text-[#0b2545] sm:mb-10 sm:text-2xl">
                   Select a Date & Time
                 </h2>
 
@@ -193,7 +193,7 @@ export default function BookPage() {
                   onSelectDate={setSelectedDate}
                 />
 
-                <div className="mt-8">
+                <div className="mt-6 max-w-sm sm:mt-8">
                   <p className="mb-2 font-bold text-[#0b2545]">Time zone</p>
                   <TimezoneSelect
                     value={displayTimezone}
@@ -204,7 +204,7 @@ export default function BookPage() {
               </section>
 
               <section>
-                <h3 className="mb-6 text-center text-lg font-semibold text-[#0b2545]">
+                <h3 className="mb-4 text-left text-lg font-semibold text-[#0b2545] sm:mb-6 sm:text-center">
                   {selectedDate || "Select a date"}
                 </h3>
 
@@ -214,7 +214,7 @@ export default function BookPage() {
                   </p>
                 )}
 
-                <div className="max-h-[620px] space-y-3 overflow-y-auto pr-2">
+                <div className="max-h-[420px] space-y-3 overflow-y-auto pr-1 sm:max-h-[620px] sm:pr-2">
                   {slots.map((slot) => (
                     <button
                       key={slot.start_time}
@@ -223,7 +223,7 @@ export default function BookPage() {
                         setSelectedSlot(slot);
                         setStep("form");
                       }}
-                      className="w-full rounded border border-blue-500 py-4 text-base font-bold text-blue-600 transition hover:border-blue-600 hover:bg-blue-50"
+                      className="w-full rounded border border-blue-500 py-3 text-base font-bold text-blue-600 transition hover:border-blue-600 hover:bg-blue-50 sm:py-4"
                     >
                       {formatTime(slot.start_time, displayTimezone)}
                     </button>
@@ -234,12 +234,12 @@ export default function BookPage() {
           )}
 
           {step === "form" && selectedSlot && (
-            <main className="p-8 lg:p-10">
-              <h2 className="mb-4 text-3xl font-bold text-[#0b2545]">
+            <main className="p-5 sm:p-8 lg:p-10">
+              <h2 className="mb-4 text-2xl font-bold text-[#0b2545] sm:text-3xl">
                 Enter Details
               </h2>
 
-              <form onSubmit={handleSubmit} className="max-w-xl space-y-7">
+              <form onSubmit={handleSubmit} className="w-full max-w-xl space-y-5 sm:space-y-7">
                 {error && <p className="text-sm text-red-600">{error}</p>}
 
                 <div>
@@ -269,7 +269,7 @@ export default function BookPage() {
 
                 <button
                   type="button"
-                  className="rounded-full border border-blue-600 px-5 py-2 font-bold text-blue-600 hover:bg-blue-50"
+                  className="w-full rounded-full border border-blue-600 px-5 py-2 font-bold text-blue-600 hover:bg-blue-50 sm:w-auto"
                 >
                   Add Guests
                 </button>
@@ -341,7 +341,7 @@ export default function BookPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="rounded-full bg-blue-600 px-7 py-4 font-bold text-white hover:bg-blue-700 disabled:opacity-50"
+                  className="w-full rounded-full bg-blue-600 px-7 py-3 font-bold text-white hover:bg-blue-700 disabled:opacity-50 sm:w-auto sm:py-4"
                 >
                   {submitting ? "Scheduling..." : "Schedule Event"}
                 </button>

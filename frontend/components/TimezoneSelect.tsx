@@ -20,7 +20,7 @@ export default function TimezoneSelect({
   const inList = TIMEZONE_OPTIONS.some((o) => o.value === value);
 
   return (
-    <div className={className}>
+    <div className={`w-full ${className}`}>
       {label && (
         <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
       )}
@@ -29,8 +29,8 @@ export default function TimezoneSelect({
         onChange={(e) => onChange(e.target.value)}
         className={
           compact
-            ? "border border-gray-300 rounded-lg px-3 py-1.5 text-sm text-gray-700 bg-white min-w-[200px]"
-            : "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 bg-white"
+            ? "w-full min-w-0 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 sm:min-w-[200px]"
+            : "w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700"
         }
       >
         {!inList && value && (

@@ -24,8 +24,8 @@ export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 min-h-screen bg-white border-r border-gray-200 flex flex-col shrink-0">
-      <div className="px-5 py-5 border-b border-gray-100">
+    <aside className="w-full shrink-0 border-b border-gray-200 bg-white md:min-h-screen md:w-64 md:border-b-0 md:border-r">
+      <div className="border-b border-gray-100 px-4 py-4 sm:px-5 md:py-5">
         <Link href="/" className="flex items-center gap-2.5 group">
           <span
             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#006bff] text-white text-sm font-bold shadow-sm"
@@ -33,13 +33,13 @@ export default function AdminSidebar() {
           >
             C
           </span>
-          <span className="font-calendly text-[1.35rem] leading-none text-[#006bff] tracking-tight">
+          <span className="font-calendly truncate text-lg leading-none tracking-tight text-[#006bff] sm:text-[1.35rem]">
             Calendly clone
           </span>
         </Link>
       </div>
 
-      <div className="px-4 pt-4 pb-2">
+      <div className="px-4 pb-2 pt-3 md:pt-4">
         <Link
           href="/admin/event-types/new"
           className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-800 hover:bg-gray-50 hover:border-gray-400 transition-colors"
@@ -49,7 +49,7 @@ export default function AdminSidebar() {
         </Link>
       </div>
 
-      <nav className="flex-1 px-3 py-2 space-y-0.5">
+      <nav className="flex gap-1 overflow-x-auto px-3 py-2 md:block md:flex-1 md:space-y-0.5 md:overflow-visible">
         {links.map((link) => {
           const active =
             link.href === "/"
@@ -61,7 +61,7 @@ export default function AdminSidebar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              className={`flex shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors md:w-full ${
                 active
                   ? "bg-[#e8f2ff] text-[#006bff]"
                   : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
@@ -70,7 +70,7 @@ export default function AdminSidebar() {
               <Icon
                 className={`w-5 h-5 shrink-0 ${active ? "text-[#006bff]" : "text-gray-500"}`}
               />
-              {link.label}
+              <span className="whitespace-nowrap">{link.label}</span>
             </Link>
           );
         })}

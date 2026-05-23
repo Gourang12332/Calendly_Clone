@@ -131,12 +131,12 @@ export default function EditEventTypePage() {
 
   return (
     <AdminLayout>
-      <div className="mb-6">
+      <div className="mb-5 sm:mb-6">
         <Link href="/admin/event-types" className="text-sm text-primary-600 hover:underline">← Back to Event Types</Link>
-        <h1 className="text-2xl font-bold text-gray-900 mt-2">Edit Event Type</h1>
+        <h1 className="mt-2 text-xl font-bold text-gray-900 sm:text-2xl">Edit Event Type</h1>
       </div>
-      <form onSubmit={handleSave} className="max-w-2xl space-y-6">
-        <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+      <form onSubmit={handleSave} className="w-full max-w-2xl space-y-5 sm:space-y-6">
+        <div className="space-y-4 rounded-xl border border-gray-200 bg-white p-4 sm:p-6">
           {error && <p className="text-red-600 text-sm">{error}</p>}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
@@ -150,7 +150,7 @@ export default function EditEventTypePage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
             <textarea value={description} onChange={(e) => setDescription(e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2" rows={3} />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Duration (min)</label>
               <input type="number" min={1} value={duration} onChange={(e) => setDuration(Number(e.target.value))} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
@@ -165,7 +165,7 @@ export default function EditEventTypePage() {
               </select>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Buffer Before</label>
               <input type="number" min={0} value={bufferBefore} onChange={(e) => setBufferBefore(Number(e.target.value))} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
@@ -181,13 +181,13 @@ export default function EditEventTypePage() {
           </label>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Custom Questions</h2>
+        <div className="rounded-xl border border-gray-200 bg-white p-4 sm:p-6">
+          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <h2 className="text-base font-semibold sm:text-lg">Custom Questions</h2>
             <button type="button" onClick={addQuestion} className="text-sm text-primary-600 font-medium">+ Add Question</button>
           </div>
 
-          <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
+          <div className="mb-6 rounded-lg border border-gray-100 bg-gray-50 p-3 sm:p-4">
             <p className="text-sm font-medium text-gray-700 mb-2">Suggested questions</p>
             <p className="text-xs text-gray-500 mb-3">Click to add a common question to your booking form</p>
             <div className="flex flex-wrap gap-2">
@@ -220,7 +220,7 @@ export default function EditEventTypePage() {
               <p className="text-sm text-gray-500">No custom questions yet. Use a suggestion above or add your own.</p>
             )}
             {questions.map((q, idx) => (
-              <div key={idx} className="border border-gray-100 rounded-lg p-4 space-y-3">
+              <div key={idx} className="space-y-3 rounded-lg border border-gray-100 p-3 sm:p-4">
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-xs font-medium text-gray-400">Question {idx + 1}</span>
                   <button
@@ -232,8 +232,8 @@ export default function EditEventTypePage() {
                   </button>
                 </div>
                 <input value={q.question_text} onChange={(e) => updateQuestion(idx, "question_text", e.target.value)} placeholder="Question text" className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
-                <div className="flex gap-3">
-                  <select value={q.question_type} onChange={(e) => updateQuestion(idx, "question_type", e.target.value)} className="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <select value={q.question_type} onChange={(e) => updateQuestion(idx, "question_type", e.target.value)} className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm sm:w-auto">
                     <option value="text">Text</option>
                     <option value="textarea">Textarea</option>
                     <option value="email">Email</option>
@@ -268,7 +268,7 @@ export default function EditEventTypePage() {
           </div>
         </div>
 
-        <button type="submit" disabled={saving} className="px-6 py-2.5 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 disabled:opacity-50">
+        <button type="submit" disabled={saving} className="w-full rounded-lg bg-primary-600 px-6 py-2.5 font-medium text-white hover:bg-primary-700 disabled:opacity-50 sm:w-auto">
           {saving ? "Saving..." : "Save Changes"}
         </button>
       </form>
