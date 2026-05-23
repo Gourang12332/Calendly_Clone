@@ -216,19 +216,35 @@ export default function BookPage() {
                 )}
 
                 <div className="max-h-[420px] space-y-3 overflow-y-auto pr-1 sm:max-h-[620px] sm:pr-2">
-                  {slots.map((slot) => (
-                    <button
-                      key={slot.start_time}
-                      type="button"
-                      onClick={() => {
-                        setSelectedSlot(slot);
-                        setStep("form");
-                      }}
-                      className="w-full rounded border border-blue-500 py-3 text-base font-bold text-blue-600 transition hover:border-blue-600 hover:bg-blue-50 sm:py-4"
-                    >
-                      {formatTime(slot.start_time, displayTimezone)}
-                    </button>
-                  ))}
+                  {slots.map((slot) => {
+                    const isSelected = selectedSlot?.start_time === slot.start_time;
+
+                    return (
+                      <div key={slot.start_time} className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedSlot(slot)}
+                          className={`flex-1 rounded border py-4 text-lg font-bold ${
+                            isSelected
+                              ? "bg-gray-600 text-white border-gray-600"
+                              : "border-blue-500 text-blue-600 hover:bg-blue-50"
+                          }`}
+                        >
+                          {formatTime(slot.start_time, displayTimezone)}
+                        </button>
+
+                        {isSelected && (
+                          <button
+                            type="button"
+                            onClick={() => setStep("form")}
+                            className="flex-1 rounded bg-blue-600 py-4 text-lg font-bold text-white hover:bg-blue-700"
+                          >
+                            Next
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </section>
             </main>
