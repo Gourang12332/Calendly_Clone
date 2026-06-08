@@ -1,33 +1,30 @@
 import os
-import smtplib
+import resend
 from datetime import datetime, timezone
-from email.mime.text import MIMEText
 from sqlalchemy.orm import Session
 from app.models import EmailNotification
 
-SMTP_HOST = os.getenv("SMTP_HOST", "")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "587") or "587")
-SMTP_USER = os.getenv("SMTP_USER", "")
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
-SMTP_FROM = os.getenv("SMTP_FROM", "")
+RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
+EMAIL_FROM = os.getenv("EMAIL_FROM", "")
+
+resend.api_key = RESEND_API_KEY
 
 
-def smtp_configured() -> bool:
-    return bool(SMTP_HOST and SMTP_USER and SMTP_PASSWORD and SMTP_FROM)
+def email_configured() -> bool:
+    return bool(RESEND_API_KEY and EMAIL_FROM)
 
 
 def send_email(recipient: str, subject: str, body: str) -> tuple[bool, str | None]:
-    if not smtp_configured():
+    if not email_configured():
         return True, None
+
     try:
-        msg = MIMEText(body, "plain", "utf-8")
-        msg["Subject"] = subject
-        msg["From"] = SMTP_FROM
-        msg["To"] = recipient
-        with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
-            server.starttls()
-            server.login(SMTP_USER, SMTP_PASSWORD)
-            server.sendmail(SMTP_FROM, [recipient], msg.as_string())
+        resend.Emails.send({
+            "from": EMAIL_FROM,
+            "to": [recipient],
+            "subject": subject,
+            "text": body,
+        })
         return True, None
     except Exception as e:
         return False, str(e)
@@ -49,24 +46,21 @@ def create_and_send_notification(
         notification_type=notification_type,
         status="pending",
     )
+
     db.add(notification)
     db.flush()
 
-    if smtp_configured():
-        success, error = send_email(recipient_email, subject, body)
-        if success:
-            notification.status = "sent"
-            notification.sent_at = datetime.now(timezone.utc)
-        else:
-            notification.status = "failed"
-            notification.error_message = error
-    else:
+    success, error = send_email(recipient_email, subject, body)
+
+    if success:
         notification.status = "sent"
         notification.sent_at = datetime.now(timezone.utc)
+    else:
+        notification.status = "failed"
+        notification.error_message = error
 
     db.flush()
     return notification
-
 
 def build_booking_confirmation_body(
     event_name: str,
